@@ -1,55 +1,34 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 namespace AdvancedGizmos {
-    [ExecuteInEditMode]
     public class GizmosTest : MonoBehaviour {
         public Material gizmosMat;
-
-        /*private void Update() {
-            int sphereCount = 10000;
-            Vector3 position = Vector3.one;
-            var positions = new Vector3[sphereCount];
-            for (int i = 0; i < sphereCount; ++i) {
-                positions[i] = position;
-            }
-            double time = EditorApplication.timeSinceStartup;
-            AdvancedGizmos.DrawSpheresOptimized(positions, 1, gizmosMat);
-            //Debug.Log("Time for drawing gizmos (Custom way) : " + (EditorApplication.timeSinceStartup - time));
-        }*/
-
-        private void OnEnable() {
-            Camera.onPreCull -= RenderWithCamera;
-            Camera.onPreCull += RenderWithCamera;
-        }
-
-        private void OnDisable() {
-            Camera.onPreCull -= RenderWithCamera;
-        }
-
-        private void RenderWithCamera(Camera cam) {
-            if (cam) {
-                AdvancedGizmos.DrawSpheresOptimized(new[] { Vector3.one }, 1, gizmosMat);
-            }
-        }
+        public int figCount = 5000;
 
         private void OnDrawGizmos() {
+            Profiler.BeginSample("Classic Gizmos");
             Gizmos.color = Color.red;
-            Gizmos.DrawSphere(-Vector3.one, 1);
-            
-            Gizmos.DrawCube(new Vector3(0, 0, 0), Vector3.one);
-        }
+            var position1 = -Vector3.one;
+            var position2 = Vector3.one;
+            for(int i = 0; i < figCount; ++i)
+                Gizmos.DrawLine(position1, position2);
+            Profiler.EndSample();
 
-        /*private void OnDrawGizmos() {
-            int sphereCount = 10000;
-            double time = EditorApplication.timeSinceStartup;
-            Gizmos.color = Color.red;
-            Vector3 position = -Vector3.one;
-            //Gizmos.DrawSphere(position, 1);
-            for (int i = 0; i < sphereCount; ++i) {
-                Gizmos.DrawSphere(position, 1);
+            Profiler.BeginSample("Advanced Gizmos - Draw Mesh Now");
+            AdvancedGizmos.SetMaterial(gizmosMat);
+            position1 = new Vector3(0, 1, -1);
+            position2 = new Vector3(0, -1, 1);
+            var lines = new Vector3[figCount * 2];
+            for (int i = 0; i < figCount * 2 - 1; ++i) {
+                lines[i] = position1;
+                lines[i + 1] = position2;
+                //AdvancedGizmos.DrawSphere(position1, Quaternion.identity, Vector3.one);
             }
-            Debug.Log("Time for drawing gizmos (classic way) : " + (EditorApplication.timeSinceStartup - time));
-        }*/
+            AdvancedGizmos.DrawLines(lines);
+
+            Profiler.EndSample();
+        }
     }
 }
