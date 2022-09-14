@@ -1,8 +1,7 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace AdvancedGizmos.Runtime.Shapes {
-    public static class Cube {
+namespace AG.Runtime.Shapes {
+    internal static class Cube {
         public static Mesh Create() {
             Mesh mesh = new Mesh();
             mesh.Clear();

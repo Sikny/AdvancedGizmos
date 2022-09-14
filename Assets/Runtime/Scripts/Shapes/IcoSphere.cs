@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace AdvancedGizmos.Runtime.Shapes {
-    public static class IcoSphere {
+namespace AG.Runtime.Shapes {
+    internal static class IcoSphere {
         // return index of point in the middle of p1 and p2
         private static int GetMiddlePoint(int p1, int p2, ref List<Vector3> vertices, ref Dictionary<long, int> cache,
             float radius) {

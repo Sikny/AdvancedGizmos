@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using AdvancedGizmos.Runtime.Shapes;
+using AG.Runtime.Shapes;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Profiling;
 using UnityEngine.Rendering;
 
-namespace AdvancedGizmos
+namespace Experimental
 {
     [InitializeOnLoad]
     public static class AdvancedGizmos {
