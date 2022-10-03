@@ -1,10 +1,10 @@
 using System.Collections.Generic;
+using AG;
 using UnityEngine;
 using UnityEngine.Profiling;
 
 namespace Experimental {
     public class GizmosTest : MonoBehaviour {
-        public Material gizmosMat;
         public int figCount = 5000;
 
         private void OnDrawGizmos() {
@@ -16,16 +16,17 @@ namespace Experimental {
                 Gizmos.DrawSphere(position1, 1);
             Profiler.EndSample();
 
-            Profiler.BeginSample("Advanced Gizmos - Draw Mesh Now");
+            Profiler.BeginSample("Advanced Gizmos");
+            AdvancedGizmos.Begin();
             position1 = new Vector3(0, 1, -1);
             position2 = new Vector3(0, -1, 1);
             //var lines = new Vector3[figCount * 2];
-            for (int i = 0; i < figCount * 2 - 1; ++i) {
+            for (int i = 0; i < figCount; ++i) {
                 /*lines[i] = position1;
                 lines[i + 1] = position2;*/
-                AG.AdvancedGizmos.DrawSphere(position1, 1);
+                AdvancedGizmos.DrawSphere(position1, 1);
             }
-            //AdvancedGizmos.DrawLines(lines);
+            AdvancedGizmos.DrawLine(-2 * Vector3.one, 2 * Vector3.one);
 
             Profiler.EndSample();
         }

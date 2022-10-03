@@ -1,6 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
 using AG.Runtime.Shapes;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace AG {
     [InitializeOnLoad]
@@ -26,16 +29,13 @@ namespace AG {
         }
         
         private static void SetMaterialType(MaterialShader newShader) {
-            Debug.Log("Checking material shader");
-            if (CurrentMat != null && _currentMaterialShader == newShader) return;
-            Debug.Log("Setting material shader");
+            if (_currentMat != null && _currentMaterialShader == newShader) return;
             _currentMaterialShader = newShader;
             CurrentMat = GetMaterial(_currentMaterialShader);
             SetPass();
         }
 
         private static void SetPass() {
-            Debug.Log("Setting pass");
             CurrentMat.SetPass(0);
         }
 
@@ -55,6 +55,7 @@ namespace AG {
             }
             return null;
         }
+        
         #endregion
         
         #region Meshes
@@ -76,8 +77,21 @@ namespace AG {
         }
 
         private static Mesh _linesMesh;
-        private static Vector3[] _lineVertices;
-        private static int[] _lineIndices;
+
+        private static Mesh LinesMesh {
+            get {
+                if (_linesMesh == null) _linesMesh = new Mesh();
+                return _linesMesh;
+            }
+        }
+        private static List<Vector3> _linesVertices;
+
+        private static List<Vector3> LinesVertices {
+            get {
+                if (_linesVertices == null) _linesVertices = new List<Vector3>();
+                return _linesVertices;
+            }
+        }
         #endregion
 
         #region Rendering
@@ -105,11 +119,18 @@ namespace AG {
         }
 
         private static void OnCameraPostRender(Camera cam) {
-            // todo draw lines
-            
-            
-            
-            _currentMaterialShader = MaterialShader.None;   // used to set pass for next frame
+            if (LinesVertices.Count > 0) {
+                LinesMesh.indexFormat = IndexFormat.UInt32;
+                LinesMesh.SetVertices(LinesVertices.ToArray());
+                LinesMesh.SetIndices(Enumerable.Range(0, LinesVertices.Count).ToArray(), MeshTopology.Lines, 0);
+
+                SetMaterialType(MaterialShader.Unlit);
+                Graphics.DrawMeshNow(_linesMesh, Matrix4x4.identity);
+            }
+
+            // clear lines to prepare for next frame
+            LinesMesh.Clear();
+            LinesVertices.Clear();
         }
         #endregion
     }

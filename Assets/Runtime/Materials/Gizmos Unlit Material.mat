@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Gizmos Unlit Material
-  m_Shader: {fileID: 4800000, guid: 59acf6ddd9c884b27b4fdcf613804aba, type: 3}
+  m_Shader: {fileID: 4800000, guid: c3530f76840141a8b8673524fbe1b967, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _ALPHAPREMULTIPLY_ON

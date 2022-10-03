@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace AG {
@@ -10,6 +11,10 @@ namespace AG {
                 UpdateMaterialColor();
             }
         }
+
+        public static void Begin() {
+            SetPass();
+        }
         
         public static void DrawSphere(Vector3 position, float radius) {
             DrawSphere(position, Quaternion.identity, radius * Vector3.one);
@@ -21,18 +26,18 @@ namespace AG {
 
         public static void DrawSphere(Vector3 position, Quaternion rotation, Vector3 scale) {
             SetMaterialType(MaterialShader.Default);
-            //GizmosSettings.gizmosMaterial.SetPass(0);
-            Debug.Log("Drawing mesh now");
             Graphics.DrawMeshNow(IcoSphereMesh, Matrix4x4.TRS(position, rotation, scale));
         }
 
         public static void DrawCube(Vector3 position, Quaternion rotation, Vector3 scale) {
-            SetMaterialType(MaterialShader.Default);
+            //SetMaterialType(MaterialShader.Default);
+            //Graphics.DrawMeshNow(CubeMesh, Matrix4x4.TRS(position, rotation, scale));
             Graphics.DrawMeshNow(CubeMesh, Matrix4x4.TRS(position, rotation, scale));
         }
 
         public static void DrawLine(Vector3 start, Vector3 end) {
-            
+            LinesVertices.Add(start);
+            LinesVertices.Add(end);
         }
     }
 }
