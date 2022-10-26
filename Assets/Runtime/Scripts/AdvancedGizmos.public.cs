@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace AG {
@@ -30,8 +29,7 @@ namespace AG {
         }
 
         public static void DrawCube(Vector3 position, Quaternion rotation, Vector3 scale) {
-            //SetMaterialType(MaterialShader.Default);
-            //Graphics.DrawMeshNow(CubeMesh, Matrix4x4.TRS(position, rotation, scale));
+            SetMaterialType(MaterialShader.Default);
             Graphics.DrawMeshNow(CubeMesh, Matrix4x4.TRS(position, rotation, scale));
         }
 
