@@ -14,6 +14,11 @@ namespace AG {
 
         public static void Begin() {
             SetPass();
+            
+            // Clear lines
+            foreach (var line in Lines) {
+                line.Value.Clear();
+            }
         }
         
         public static void DrawSphere(Vector3 position, float radius) {
@@ -39,6 +44,8 @@ namespace AG {
                 Lines[Color] = new Line(start, end);
             }
             Lines[Color].AddLine(start, end);
+            SetMaterialType(MaterialShader.Unlit);
+            Lines[Color].Draw();
         }
     }
 }

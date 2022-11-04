@@ -36,8 +36,12 @@ namespace AG.Runtime.Shapes {
             Mesh.SetVertices(Vertices);
             Mesh.SetIndices(Enumerable.Range(0, Vertices.Count).ToArray(), MeshTopology.Lines, 0);
             Graphics.DrawMeshNow(Mesh, Matrix4x4.identity);
-            
-            // clear line to prepare for next frame
+        }
+
+        /// <summary>
+        /// clear line to prepare for next frame
+        /// </summary>
+        public void Clear() {
             Mesh.Clear();
             Vertices.Clear();
         }

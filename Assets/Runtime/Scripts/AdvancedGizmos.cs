@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
 using AG.Runtime.Shapes;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace AG {
     [InitializeOnLoad]
@@ -103,17 +101,6 @@ namespace AG {
             _currentMaterialShader = MaterialShader.Default;
 
             _color = Color.white;
-
-            Camera.onPostRender -= OnCameraPostRender;
-            Camera.onPostRender += OnCameraPostRender;
-        }
-
-        private static void OnCameraPostRender(Camera cam) {
-            SetMaterialType(MaterialShader.Unlit);
-            foreach (var line in Lines) {
-                Color = line.Key;
-                line.Value.Draw();
-            }
         }
         #endregion
     }
