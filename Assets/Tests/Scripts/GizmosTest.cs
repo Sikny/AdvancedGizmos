@@ -26,7 +26,10 @@ namespace Experimental {
                 lines[i + 1] = position2;*/
                 AdvancedGizmos.DrawSphere(position1, 1);
             }
+            AdvancedGizmos.Color = Color.green;
             AdvancedGizmos.DrawLine(-2 * Vector3.one, 2 * Vector3.one);
+            AdvancedGizmos.Color = Color.blue;
+            AdvancedGizmos.DrawLine(-2 * Vector3.one + Vector3.up, 2 * Vector3.one + Vector3.up);
             
             AdvancedGizmos.DrawCube(new Vector3(3, 2, 2), Quaternion.identity, Vector3.one);
 

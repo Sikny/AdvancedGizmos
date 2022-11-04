@@ -1,3 +1,4 @@
+using AG.Runtime.Shapes;
 using UnityEngine;
 
 namespace AG {
@@ -34,8 +35,10 @@ namespace AG {
         }
 
         public static void DrawLine(Vector3 start, Vector3 end) {
-            LinesVertices.Add(start);
-            LinesVertices.Add(end);
+            if (!Lines.ContainsKey(Color)) {
+                Lines[Color] = new Line(start, end);
+            }
+            Lines[Color].AddLine(start, end);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace AG {
             if (_currentMat != null && _currentMaterialShader == newShader) return;
             _currentMaterialShader = newShader;
             CurrentMat = GetMaterial(_currentMaterialShader);
-            SetPass();
+            UpdateMaterialColor();
         }
 
         private static void SetPass() {
@@ -76,20 +76,12 @@ namespace AG {
             }
         }
 
-        private static Mesh _linesMesh;
+        private static Dictionary<Color, Line> _lines;
 
-        private static Mesh LinesMesh {
+        private static Dictionary<Color, Line> Lines {
             get {
-                if (_linesMesh == null) _linesMesh = new Mesh();
-                return _linesMesh;
-            }
-        }
-        private static List<Vector3> _linesVertices;
-
-        private static List<Vector3> LinesVertices {
-            get {
-                if (_linesVertices == null) _linesVertices = new List<Vector3>();
-                return _linesVertices;
+                if (_lines == null) _lines = new Dictionary<Color, Line>();
+                return _lines;
             }
         }
         #endregion
@@ -106,8 +98,6 @@ namespace AG {
                 return _gizmosSettings;
             }
         }
-        
-        private static Camera _sceneCamera;
 
         static AdvancedGizmos() {
             _currentMaterialShader = MaterialShader.Default;
@@ -119,18 +109,11 @@ namespace AG {
         }
 
         private static void OnCameraPostRender(Camera cam) {
-            if (LinesVertices.Count > 0) {
-                LinesMesh.indexFormat = IndexFormat.UInt32;
-                LinesMesh.SetVertices(LinesVertices.ToArray());
-                LinesMesh.SetIndices(Enumerable.Range(0, LinesVertices.Count).ToArray(), MeshTopology.Lines, 0);
-
-                SetMaterialType(MaterialShader.Unlit);
-                Graphics.DrawMeshNow(_linesMesh, Matrix4x4.identity);
+            SetMaterialType(MaterialShader.Unlit);
+            foreach (var line in Lines) {
+                Color = line.Key;
+                line.Value.Draw();
             }
-
-            // clear lines to prepare for next frame
-            LinesMesh.Clear();
-            LinesVertices.Clear();
         }
         #endregion
     }
