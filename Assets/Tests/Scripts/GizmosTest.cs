@@ -27,6 +27,8 @@ namespace Experimental {
                 AdvancedGizmos.DrawSphere(position1, 1);
             }
             AdvancedGizmos.DrawLine(-2 * Vector3.one, 2 * Vector3.one);
+            
+            AdvancedGizmos.DrawCube(new Vector3(3, 2, 2), Quaternion.identity, Vector3.one);
 
             Profiler.EndSample();
         }
