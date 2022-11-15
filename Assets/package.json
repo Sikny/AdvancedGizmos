@@ -1,6 +1,6 @@
 {
   "name": "com.sikny.advancedgizmos",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "displayName": "Advanced Gizmos",
   "description": "Optimized Gizmos for base shapes + more shape types to draw",
   "unity": "2019.4",
